@@ -18,7 +18,7 @@ func (repo PostgresOrmRepository) GetByFilter(filter Filter) (bikes []Bike, err 
 	bikes = []Bike{}
 	query := repo.db.Model(&bikes)
 
-	if filter.ID > 0 {
+	if filter.ID != "" {
 		query.Where("id = ?", filter.ID)
 	}
 
@@ -30,13 +30,13 @@ func (repo PostgresOrmRepository) GetByFilter(filter Filter) (bikes []Bike, err 
 	return
 }
 
-func (repo PostgresOrmRepository) GetByID(bikeID int64) (bike Bike, err error) {
+func (repo PostgresOrmRepository) GetByID(bikeID string) (bike Bike, err error) {
 	bike = Bike{}
 	err = repo.db.Model(&bike).Where("id = ?", bikeID).Select()
 	return
 }
 
-func (repo PostgresOrmRepository) Register(bike Bike) (bikeID int64, err error) {
+func (repo PostgresOrmRepository) Register(bike Bike) (bikeID string, err error) {
 	_, err = repo.db.Model(&bike).Insert()
 	bikeID = bike.ID
 	return
@@ -47,8 +47,8 @@ func (repo PostgresOrmRepository) Update(bike Bike) (err error) {
 	return
 }
 
-func (repo PostgresOrmRepository) Delete(bikeID int64) (err error) {
-	_, err = repo.db.Model(&Bike{ID: bikeID}).Delete()
+func (repo PostgresOrmRepository) Delete(bikeID string) (err error) {
+	_, err = repo.db.Model(&Bike{ID: bikeID}).WherePK().Delete()
 	return
 }
 
