@@ -9,6 +9,7 @@ import (
 const (
 	PostegresORMKind = "postgres-orm"
 	FirestoreKind    = "firestore"
+	MockKind         = "mock"
 )
 
 type Connection interface {
@@ -32,6 +33,8 @@ func New(config Config) (conn Connection, err error) {
 		conn, err = NewPostgresORMConnection(config)
 	case FirestoreKind:
 		conn, err = NewFirestoreConnection(config)
+	case MockKind:
+		conn, err = NewMockConnection(config)
 	default:
 		err = errors.New("invalid kind of connection")
 	}

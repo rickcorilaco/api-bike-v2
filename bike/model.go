@@ -1,11 +1,16 @@
 package bike
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 const (
 	colletionName = "bikes"
 	parameterID   = "bike_id"
 )
+
+var ErrBikeNotFound = errors.New("bike not found")
 
 type Bike struct {
 	ID    string `json:"id" pg:",pk"`

@@ -17,12 +17,14 @@ type Repository interface {
 	Delete(bikeID string) (err error)
 }
 
-func NewRepository(connection connection.Connection) (repository Repository, err error) {
-	switch conn := connection.Interface().(type) {
+func NewRepository(conn connection.Connection) (repository Repository, err error) {
+	switch c := conn.Interface().(type) {
 	case *pg.DB:
-		repository, err = NewPostgresORMRepository(conn)
+		repository, err = NewPostgresORMRepository(c)
 	case *firestore.Client:
-		repository, err = NewFirestoreRepository(conn)
+		repository, err = NewFirestoreRepository(c)
+	case *connection.MockClient:
+		repository, err = NewMockRepository(c)
 	default:
 		err = errors.New("connection type is not implemented")
 	}
