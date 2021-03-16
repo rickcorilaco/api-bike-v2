@@ -44,8 +44,8 @@ func MustNew(config Config) (ctrl Controller) {
 func NewFromEnv() (ctrl Controller, err error) {
 	config := Config{
 		Kind: env.MustString("controller.kind"),
-		Port: env.TryString("controller.port"),
-		Log:  env.TryBool("controller.log"),
+		Port: env.MustString("controller.port"),
+		Log:  env.MustBool("controller.log"),
 	}
 
 	return New(config)

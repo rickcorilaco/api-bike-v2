@@ -54,12 +54,12 @@ func MustNew(config Config) (conn Connection) {
 func NewFromEnv() (conn Connection, err error) {
 	config := Config{
 		Kind:     env.MustString("connection.kind"),
-		Host:     env.TryString("connection.host"),
-		Port:     env.TryString("connection.port"),
-		Username: env.TryString("connection.user"),
-		Password: env.TryString("connection.password"),
-		Name:     env.TryString("connection.name"),
-		FilePath: env.TryString("connection.file_path"),
+		Host:     env.MustString("connection.host"),
+		Port:     env.MustString("connection.port"),
+		Username: env.MustString("connection.user"),
+		Password: env.MustString("connection.password"),
+		Name:     env.MustString("connection.name"),
+		FilePath: env.MustString("connection.file_path"),
 	}
 
 	return New(config)
