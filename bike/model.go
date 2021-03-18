@@ -13,8 +13,8 @@ const (
 var ErrBikeNotFound = errors.New("bike not found")
 
 type Bike struct {
-	ID    string `json:"id" pg:",pk"`
-	Model string `json:"model"`
+	ID    string `json:"id" pg:",pk" bson:"_id"`
+	Model string `json:"model" bson:"model"`
 }
 
 func (b Bike) String() string {

@@ -9,6 +9,7 @@ import (
 const (
 	PostegresORMKind = "postgres-orm"
 	FirestoreKind    = "firestore"
+	MongoKind        = "mongo"
 	MockKind         = "mock"
 )
 
@@ -33,6 +34,8 @@ func New(config Config) (conn Connection, err error) {
 		conn, err = NewPostgresORMConnection(config)
 	case FirestoreKind:
 		conn, err = NewFirestoreConnection(config)
+	case MongoKind:
+		conn, err = NewMongoConnection(config)
 	case MockKind:
 		conn, err = NewMockConnection(config)
 	default:

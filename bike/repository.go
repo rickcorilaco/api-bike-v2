@@ -6,6 +6,7 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/go-pg/pg"
 	"github.com/rickcorilaco/api-bike-v2/connection"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Repository interface {
@@ -23,6 +24,8 @@ func NewRepository(conn connection.Connection) (repository Repository, err error
 		repository, err = NewPostgresORMRepository(c)
 	case *firestore.Client:
 		repository, err = NewFirestoreRepository(c)
+	case *mongo.Client:
+		repository, err = NewMongoRepository(c)
 	case *connection.MockClient:
 		repository, err = NewMockRepository(c)
 	default:
